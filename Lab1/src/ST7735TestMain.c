@@ -466,7 +466,7 @@ const uint16_t Logo[] = {
  0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF
 };
 
-int main(void){
+int main7(void){
 	PLL_Init();
 	Output_Init();
 	Edge_Init();
@@ -485,7 +485,7 @@ int main0(void){
   while(1){
   }
 } 
-int main1(void){uint32_t j;
+int main(void){uint32_t j;
   PLL_Init();
   ST7735_InitR(INITR_REDTAB);
   ST7735_OutString("Graphics test\n");

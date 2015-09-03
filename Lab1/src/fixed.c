@@ -200,13 +200,13 @@ int32_t Switch_Pressed(){
 	return 1;
 }
 
+void XYplotInit(char * stringy, int32_t minX, int32_t maxX, int32_t minY, int32_t maxY){
+	ST7735_InitR(INITR_REDTAB);
+  ST7735_OutString("Graphics test\n");
+  ST7735_OutString("cubic function\n");
+  ST7735_PlotClear(minY,maxY);  // range from 0 to 4095
+}
 
-/*
-void ST7735_SetCursor(uint32_t newX, uint32_t newY);
-
-void ST7735_DrawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color);
-
-void ST7735_DrawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
-
-ST7735_YELLOW
-*/
+void XYplot(char * xBuff, char * yBuff, int32_t num){
+	num += 1;
+}
