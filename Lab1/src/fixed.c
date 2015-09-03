@@ -186,10 +186,15 @@ void Edge_Init(void){
   NVIC_EN0_R = 0x40000000;      // (h) enable interrupt 30 in NVIC
   EnableInterrupts();           // (i) Clears the I bit
 }
-
+int32_t waiting = 0;
 void GPIOPortF_Handler(void){
   GPIO_PORTF_ICR_R = 0x10;      // acknowledge flag4
-	flag ^= 1;
+	if(waiting)
+	{ flag ^= 1; }
+}
+
+void wait(int32_t x){
+	waiting = x;
 }
 
 int32_t check = 0;
@@ -199,14 +204,34 @@ int32_t Switch_Pressed(){
 	check = flag;
 	return 1;
 }
+#define GRAPH_H 149
+#define GRAPH_W 127
 
-void XYplotInit(char * stringy, int32_t minX, int32_t maxX, int32_t minY, int32_t maxY){
-	ST7735_InitR(INITR_REDTAB);
-  ST7735_OutString("Graphics test\n");
-  ST7735_OutString("cubic function\n");
-  ST7735_PlotClear(minY,maxY);  // range from 0 to 4095
+
+int32_t xScale = 0;
+int32_t yScale = 0;
+int32_t Xlow = 0;
+int32_t Yhigh = 0;
+void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int32_t maxY){
+	xScale = maxX - minX;
+	yScale = maxY - minY;
+	Xlow = minX;
+	Yhigh = maxY;
+	ST7735_FillScreen(ST7735_BLACK);
+	ST7735_SetCursor(1,0);
+	ST7735_OutString(stringy);
+	ST7735_DrawFastVLine((minX*GRAPH_W)/xScale, 10, 159, ST7735_YELLOW);
+	ST7735_DrawFastHLine(0, 20 +(minY), 127, ST7735_YELLOW);
 }
 
-void XYplot(char * xBuff, char * yBuff, int32_t num){
-	num += 1;
+void XYplot(int32_t* xBuff, int32_t * yBuff, int32_t num){
+	for(int32_t i = 0; i < num; i++)
+	{
+		int32_t x = ((xBuff[i] - Xlow) * GRAPH_W) / xScale;
+		int32_t y = (10 +(((Yhigh - yBuff[i]) * GRAPH_H) / yScale));
+		ST7735_DrawPixel(x, y + 1, ST7735_YELLOW);
+		ST7735_DrawPixel(x, y, ST7735_YELLOW);
+		ST7735_DrawPixel(x + 1, y + 1, ST7735_YELLOW);
+		ST7735_DrawPixel(x + 1, y, ST7735_YELLOW);
+	}
 }

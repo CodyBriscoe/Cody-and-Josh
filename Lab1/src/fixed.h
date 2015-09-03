@@ -61,5 +61,13 @@ int32_t Switch_Pressed(void);
 button at PF4*/
 void Edge_Init(void);
 
+/*sets a flag that determines whether or not the
+program is waiting for a button press to continue*/
+void wait(int32_t);
+
+void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int32_t maxY);
+
+void XYplot(int32_t * xBuff, int32_t * yBuff, int32_t num);
+	
 #endif
 

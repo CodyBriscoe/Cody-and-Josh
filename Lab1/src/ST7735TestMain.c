@@ -466,15 +466,24 @@ const uint16_t Logo[] = {
  0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF
 };
 
-int main7(void){
+int main(void){
 	PLL_Init();
 	Output_Init();
 	Edge_Init();
-	while(!Switch_Pressed()){}
-	testBinary();
-	while(!Switch_Pressed()){}
-	testDec(); 
 	while(1){
+		while(!Switch_Pressed()){wait(1);}
+		wait(0);
+		testBinary();
+		while(!Switch_Pressed()){wait(1);}
+		wait(0);
+		testDec(); 
+		while(!Switch_Pressed()){wait(1);}
+		wait(0);
+		XYplotInit("Graph", -5000, 9999, -9999, 9999);
+		int32_t xBuff[] = {-4000,-2000,0,2000,4000,6000,8000};
+		int32_t yBuff[] = {-4000,-2000,0,2000,4000,6000,8000};
+		XYplot(xBuff, yBuff, 7);
+		while(1){}
 	}
 }
 
@@ -485,7 +494,7 @@ int main0(void){
   while(1){
   }
 } 
-int main(void){uint32_t j;
+int main1(void){uint32_t j;
   PLL_Init();
   ST7735_InitR(INITR_REDTAB);
   ST7735_OutString("Graphics test\n");
