@@ -12,7 +12,7 @@ static uint32_t boundsSet = 0;
 void testGraph(void){
 	for(int i = 0; i < 100; i += 1){
 		int32_t x = i - 50;
-		int32_t y = (x * x * x);//some function
+		int32_t y = (x) + 100;//some function
 		xResult[i] = x;//store the x point
 		yResult[i] = y;//store the y point 
 		if(!boundsSet){

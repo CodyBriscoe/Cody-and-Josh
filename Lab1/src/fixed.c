@@ -228,26 +228,26 @@ void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int
 	uint32_t xDrawn = 0;
 	uint32_t yDrawn = 0;
 	if(Xlow <= 0 && maxX <= 0){//All x values are 0 or negative so put the vertical bar on the far right
-		ST7735_DrawFastVLine(GRAPH_W , TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_WHITE);
+		ST7735_DrawFastVLine(GRAPH_W, TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_RED);
 		yDrawn = 1;
 	}
 	if(Yhigh <= 0 && minY <= 0){//All y values are negative or 0 so draw the horizontal axis on the top
-		ST7735_DrawFastHLine(0,  TEXT_PADDING, GRAPH_W, ST7735_WHITE);
+		ST7735_DrawFastHLine(0,  TEXT_PADDING, GRAPH_W, ST7735_RED);
 		xDrawn = 1;
 	}
 	if(Xlow >= 0 && maxX >= 0){// All x values are positive or 0 so draw the vertical line to the left
-		ST7735_DrawFastVLine( 0, TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_WHITE);
+		ST7735_DrawFastVLine( 0, TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_RED);
 		yDrawn = 1;
 	}
 	if(Yhigh >= 0 && minY >= 0){//All y values are positive or 0 so draw the horizontal lone on the bottom
-		ST7735_DrawFastHLine(0,  TEXT_PADDING + GRAPH_H, GRAPH_W, ST7735_WHITE);
+		ST7735_DrawFastHLine(0,  TEXT_PADDING + GRAPH_H, GRAPH_W, ST7735_RED);
 		xDrawn = 1;
 	}
 	if(!xDrawn){//normal draw of the x axis checks to see if the axis has already been drawn
-		ST7735_DrawFastHLine(0,  TEXT_PADDING + ((maxY * GRAPH_H / yScale)), GRAPH_W, ST7735_WHITE);
+		ST7735_DrawFastHLine(0,  TEXT_PADDING + ((maxY * GRAPH_H / yScale)), GRAPH_W, ST7735_RED);
 	}
 	if(!yDrawn){//normal draw of the y axis checks to see if the axis has already been drawn
-		ST7735_DrawFastVLine((minX * GRAPH_W)/xScale, TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_WHITE);
+		ST7735_DrawFastVLine((minX * GRAPH_W)/xScale, TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_RED);
 	}
 }
 
