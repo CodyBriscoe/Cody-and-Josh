@@ -479,9 +479,9 @@ int main(void){
 		testDec(); 
 		while(!Switch_Pressed()){wait(1);}
 		wait(0);
-		XYplotInit("Graph", -5000, 9999, -9999, 9999);
-		int32_t xBuff[] = {-4000,-2000,0,2000,4000,6000,8000};
-		int32_t yBuff[] = {-4000,-2000,0,2000,4000,6000,8000};
+		XYplotInit("Graph", -7000, 14000, -4000, 8000);
+		int32_t xBuff[] = {-7000, -4000,-2000,0,2000,4000, 14000};
+		int32_t yBuff[] = {-4000,-2000,0,2000,4000, 4700, 8000};
 		XYplot(xBuff, yBuff, 7);
 		while(1){}
 	}

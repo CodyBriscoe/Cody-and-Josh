@@ -217,11 +217,13 @@ void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int
 	yScale = maxY - minY;
 	Xlow = minX;
 	Yhigh = maxY;
+	if(minX < 0){minX *= -1;}
+	if(minY < 0){minY *= -1;}
 	ST7735_FillScreen(ST7735_BLACK);
 	ST7735_SetCursor(1,0);
 	ST7735_OutString(stringy);
-	ST7735_DrawFastVLine((minX*GRAPH_W)/xScale, 10, 159, ST7735_YELLOW);
-	ST7735_DrawFastHLine(0, 20 +(minY), 127, ST7735_YELLOW);
+	ST7735_DrawFastVLine((minX * 127)/xScale, 10, 159, ST7735_YELLOW);
+	ST7735_DrawFastHLine(0,  10 + ((minY * 149 / yScale)), 127, ST7735_YELLOW);
 }
 
 void XYplot(int32_t* xBuff, int32_t * yBuff, int32_t num){
