@@ -224,8 +224,31 @@ void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int
 	ST7735_FillScreen(ST7735_BLACK);
 	ST7735_SetCursor(1,0);
 	ST7735_OutString(stringy);
-	ST7735_DrawFastVLine((minX * 127)/xScale, 10, 159, ST7735_YELLOW);
-	ST7735_DrawFastHLine(0,  10 + ((maxY * 149 / yScale)), 127, ST7735_YELLOW);
+	/*need to determine if the graph will have to axi*/
+	uint32_t xDrawn = 0;
+	uint32_t yDrawn = 0;
+	if(Xlow <= 0 && maxX <= 0){
+		ST7735_DrawFastVLine( 126 , 10, 159, ST7735_WHITE);
+		yDrawn = 1;
+	}
+	if(Yhigh <= 0 && minY <= 0){
+		ST7735_DrawFastHLine(0,  11, 127, ST7735_WHITE);
+		xDrawn = 1;
+	}
+	if(Xlow >= 0 && maxX >= 0){
+		ST7735_DrawFastVLine( 1, 10, 159, ST7735_WHITE);
+		yDrawn = 1;
+	}
+	if(Yhigh >= 0 && minY >= 0){
+		ST7735_DrawFastHLine(0,  158, 127, ST7735_WHITE);
+		xDrawn = 1;
+	}
+	if(!xDrawn){
+		ST7735_DrawFastHLine(0,  10 + ((maxY * 149 / yScale)), 127, ST7735_WHITE);
+	}
+	if(!yDrawn){
+		ST7735_DrawFastVLine((minX * 127)/xScale, 10, 159, ST7735_WHITE);
+	}
 }
 
 void XYplot(int32_t* xBuff, int32_t* yBuff, int32_t num){
@@ -233,9 +256,9 @@ void XYplot(int32_t* xBuff, int32_t* yBuff, int32_t num){
 	{
 		int32_t x = ((xBuff[i] - Xlow) * GRAPH_W) / xScale;
 		int32_t y = (10 +(((Yhigh - yBuff[i]) * GRAPH_H) / yScale));
-		ST7735_DrawPixel(x, y + 1, ST7735_WHITE);
-		ST7735_DrawPixel(x, y, ST7735_WHITE);
-		ST7735_DrawPixel(x + 1, y + 1, ST7735_WHITE);
-		ST7735_DrawPixel(x + 1, y, ST7735_WHITE);
+		ST7735_DrawPixel(x, y + 1, ST7735_YELLOW);
+		ST7735_DrawPixel(x, y, ST7735_YELLOW);
+		ST7735_DrawPixel(x + 1, y + 1, ST7735_YELLOW);
+		ST7735_DrawPixel(x + 1, y, ST7735_YELLOW);
 	}
 }
