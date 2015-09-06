@@ -215,25 +215,27 @@ int32_t Yhigh = 0;
 void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int32_t maxY){
 	xScale = maxX - minX;
 	yScale = maxY - minY;
+	if(xScale < 0){xScale *= -1;}//make the scales a magnitude
+	if(yScale < 0){yScale *= -1;}
 	Xlow = minX;
 	Yhigh = maxY;
-	if(minX < 0){minX *= -1;}
-	if(minY < 0){minY *= -1;}
+	if(minX < 0){minX *= -1;}//abs value of the mins so that the ratios wont screw up the line plots
+	if(maxY < 0){maxY *= -1;}
 	ST7735_FillScreen(ST7735_BLACK);
 	ST7735_SetCursor(1,0);
 	ST7735_OutString(stringy);
 	ST7735_DrawFastVLine((minX * 127)/xScale, 10, 159, ST7735_YELLOW);
-	ST7735_DrawFastHLine(0,  10 + ((minY * 149 / yScale)), 127, ST7735_YELLOW);
+	ST7735_DrawFastHLine(0,  10 + ((maxY * 149 / yScale)), 127, ST7735_YELLOW);
 }
 
-void XYplot(int32_t* xBuff, int32_t * yBuff, int32_t num){
+void XYplot(int32_t* xBuff, int32_t* yBuff, int32_t num){
 	for(int32_t i = 0; i < num; i++)
 	{
 		int32_t x = ((xBuff[i] - Xlow) * GRAPH_W) / xScale;
 		int32_t y = (10 +(((Yhigh - yBuff[i]) * GRAPH_H) / yScale));
-		ST7735_DrawPixel(x, y + 1, ST7735_YELLOW);
-		ST7735_DrawPixel(x, y, ST7735_YELLOW);
-		ST7735_DrawPixel(x + 1, y + 1, ST7735_YELLOW);
-		ST7735_DrawPixel(x + 1, y, ST7735_YELLOW);
+		ST7735_DrawPixel(x, y + 1, ST7735_WHITE);
+		ST7735_DrawPixel(x, y, ST7735_WHITE);
+		ST7735_DrawPixel(x + 1, y + 1, ST7735_WHITE);
+		ST7735_DrawPixel(x + 1, y, ST7735_WHITE);
 	}
 }
