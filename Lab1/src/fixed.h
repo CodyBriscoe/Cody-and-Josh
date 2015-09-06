@@ -65,8 +65,11 @@ void Edge_Init(void);
 program is waiting for a button press to continue*/
 void wait(int32_t);
 
+/*writes the vertical and horizontal bars to the screeen
+and sets global varialbes that are needed to plot the points*/
 void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int32_t maxY);
 
+/*plots the points relative to the screen size*/
 void XYplot(int32_t * xBuff, int32_t * yBuff, int32_t num);
 	
 #endif

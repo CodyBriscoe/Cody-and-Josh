@@ -206,7 +206,7 @@ int32_t Switch_Pressed(){
 }
 #define GRAPH_H 149
 #define GRAPH_W 127
-
+#define TEXT_PADDING 10
 
 int32_t xScale = 0;
 int32_t yScale = 0;
@@ -224,30 +224,30 @@ void XYplotInit(uint8_t * stringy, int32_t minX, int32_t maxX, int32_t minY, int
 	ST7735_FillScreen(ST7735_BLACK);
 	ST7735_SetCursor(1,0);
 	ST7735_OutString(stringy);
-	/*need to determine if the graph will have to axi*/
+	/*series of if statements that determine where the axises need to be drawn*/
 	uint32_t xDrawn = 0;
 	uint32_t yDrawn = 0;
-	if(Xlow <= 0 && maxX <= 0){
-		ST7735_DrawFastVLine( 126 , 10, 159, ST7735_WHITE);
+	if(Xlow <= 0 && maxX <= 0){//All x values are 0 or negative so put the vertical bar on the far right
+		ST7735_DrawFastVLine(GRAPH_W , TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_WHITE);
 		yDrawn = 1;
 	}
-	if(Yhigh <= 0 && minY <= 0){
-		ST7735_DrawFastHLine(0,  11, 127, ST7735_WHITE);
+	if(Yhigh <= 0 && minY <= 0){//All y values are negative or 0 so draw the horizontal axis on the top
+		ST7735_DrawFastHLine(0,  TEXT_PADDING, GRAPH_W, ST7735_WHITE);
 		xDrawn = 1;
 	}
-	if(Xlow >= 0 && maxX >= 0){
-		ST7735_DrawFastVLine( 1, 10, 159, ST7735_WHITE);
+	if(Xlow >= 0 && maxX >= 0){// All x values are positive or 0 so draw the vertical line to the left
+		ST7735_DrawFastVLine( 0, TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_WHITE);
 		yDrawn = 1;
 	}
-	if(Yhigh >= 0 && minY >= 0){
-		ST7735_DrawFastHLine(0,  158, 127, ST7735_WHITE);
+	if(Yhigh >= 0 && minY >= 0){//All y values are positive or 0 so draw the horizontal lone on the bottom
+		ST7735_DrawFastHLine(0,  TEXT_PADDING + GRAPH_H, GRAPH_W, ST7735_WHITE);
 		xDrawn = 1;
 	}
-	if(!xDrawn){
-		ST7735_DrawFastHLine(0,  10 + ((maxY * 149 / yScale)), 127, ST7735_WHITE);
+	if(!xDrawn){//normal draw of the x axis checks to see if the axis has already been drawn
+		ST7735_DrawFastHLine(0,  TEXT_PADDING + ((maxY * GRAPH_H / yScale)), GRAPH_W, ST7735_WHITE);
 	}
-	if(!yDrawn){
-		ST7735_DrawFastVLine((minX * 127)/xScale, 10, 159, ST7735_WHITE);
+	if(!yDrawn){//normal draw of the y axis checks to see if the axis has already been drawn
+		ST7735_DrawFastVLine((minX * GRAPH_W)/xScale, TEXT_PADDING, TEXT_PADDING + GRAPH_H, ST7735_WHITE);
 	}
 }
 
@@ -255,7 +255,7 @@ void XYplot(int32_t* xBuff, int32_t* yBuff, int32_t num){
 	for(int32_t i = 0; i < num; i++)
 	{
 		int32_t x = ((xBuff[i] - Xlow) * GRAPH_W) / xScale;
-		int32_t y = (10 +(((Yhigh - yBuff[i]) * GRAPH_H) / yScale));
+		int32_t y = (TEXT_PADDING +(((Yhigh - yBuff[i]) * GRAPH_H) / yScale));
 		ST7735_DrawPixel(x, y + 1, ST7735_YELLOW);
 		ST7735_DrawPixel(x, y, ST7735_YELLOW);
 		ST7735_DrawPixel(x + 1, y + 1, ST7735_YELLOW);
