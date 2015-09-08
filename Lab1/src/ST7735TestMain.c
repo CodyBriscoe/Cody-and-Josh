@@ -59,6 +59,5 @@ int main(void){
 		int32_t* xBuff = getXData();
 		int32_t* yBuff = getYData();
 		XYplot(xBuff, yBuff, getLength());
-		while(1){}
 	}
 }
